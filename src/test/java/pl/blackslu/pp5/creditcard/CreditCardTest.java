@@ -12,7 +12,7 @@ public class CreditCardTest {
     @Test
     public void itAllowAssignLimitToCreditCard() {
         //Arrange // Given
-        CreditCard creditCard = new CrediCard();
+        CreditCard creditCard = new CreditCard();
         //Act //When
         creditCard.assignLimit(BigDecimal.valueOf(INITIAL_LIMIT));
         //Assert // Then // Expect
