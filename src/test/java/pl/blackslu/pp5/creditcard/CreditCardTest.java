@@ -30,4 +30,14 @@ public class CreditCardTest {
         }
 
     }
+    @Test
+    public void withdrawFromCard(){
+        //Arrange // Given
+        CreditCard creditCard = new CreditCard();
+        creditCard.assignLimit(BigDecimal.valueOf(INITIAL_LIMIT));
+        //Act //When
+        creditCard.withdraw(BigDecimal.valueOf(200));
+        //Assert // Then // Expect
+        Assert.assertEquals(creditCard.currentBalance(), BigDecimal.valueOf(800));
+    }
 }
