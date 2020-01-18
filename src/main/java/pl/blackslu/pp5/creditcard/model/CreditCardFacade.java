@@ -1,5 +1,7 @@
 package pl.blackslu.pp5.creditcard.model;
 
+import java.util.List;
+
 public class CreditCardFacade {
 
     private CreditCardStorage creditCardStorage;
@@ -19,5 +21,7 @@ public class CreditCardFacade {
         CreditCard creditCard = creditCardStorage.load(number);
         return creditCard.getSummary();
     }
-
+    public List<CreditCard> getCardsReport(){
+        return creditCardStorage.all();
+    }
 }

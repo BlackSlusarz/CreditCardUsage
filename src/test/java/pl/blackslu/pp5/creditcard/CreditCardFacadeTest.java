@@ -6,6 +6,7 @@ import org.junit.Test;
 import pl.blackslu.pp5.creditcard.model.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CreditCardFacadeTest {
 
@@ -27,6 +28,14 @@ public class CreditCardFacadeTest {
         Assert.assertNotNull(summary);
         Assert.assertEquals(summary.balance, BigDecimal.valueOf(800));
 
+    }
+
+    @Test
+    public void itAllowGenerateReport(){
+        thereIsCreditCardIdentifiedWithNumber("1234-56789");
+        CreditCardFacade api = thereIsCCApi();
+        List<CreditCard> report = api.getCardsReport();
+        Assert.assertTrue(report.size() ==1);
     }
 
     private CreditCardFacade thereIsCCApi() {
