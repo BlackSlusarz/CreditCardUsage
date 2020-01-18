@@ -1,6 +1,7 @@
 package pl.blackslu.pp5.creditcard.model;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
@@ -10,9 +11,16 @@ import java.util.UUID;
 public class CreditCardConfiguration {
 
     @Bean
-    CreditCardFacade creditCardFacade(){
-        CreditCardStorage storage = getFixtures();
-        return new CreditCardFacade(storage);
+    CreditCardFacade creditCardFacade(CreditCardStorage cardStorage){
+
+        return new CreditCardFacade(cardStorage);
+    }
+    @Bean
+    CreditCardStorage inMemory(){
+        return getFixtures();
+    }
+    CreditCardStorage fileCCStorage(){
+        return new FileCreditCardStorage();
     }
     private CreditCardStorage getFixtures(){
         CreditCardStorage storage = new InMemoryCreditCardStorage();
