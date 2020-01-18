@@ -1,13 +1,23 @@
 package pl.blackslu.pp5.creditcard.model;
 
-import java.math.BigDecimal;
-
 public class CreditCardFacade {
 
-    public void withdraw(String s, BigDecimal valueOf) {
+    private CreditCardStorage creditCardStorage;
+
+
+    public CreditCardFacade(CreditCardStorage creditCardStorage){
+        this.creditCardStorage = creditCardStorage;
     }
 
-    public CardSummary getSummary(String s) {
-        return null;
+    public void withdraw(WithdrawCommand withdrawCommand) {
+        CreditCard creditCard = creditCardStorage.load(withdrawCommand.getNumber());
+        creditCard.withdraw(withdrawCommand.getAmount());
+        creditCardStorage.add(creditCard);
     }
+
+    public CardSummary getSummary(String number) {
+        CreditCard creditCard = creditCardStorage.load(number);
+        return creditCard.getSummary();
+    }
+
 }

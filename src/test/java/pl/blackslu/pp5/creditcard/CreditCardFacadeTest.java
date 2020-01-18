@@ -1,11 +1,9 @@
 package pl.blackslu.pp5.creditcard;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import pl.blackslu.pp5.creditcard.model.CardSummary;
-import pl.blackslu.pp5.creditcard.model.CreditCard;
-import pl.blackslu.pp5.creditcard.model.CreditCardFacade;
-import pl.blackslu.pp5.creditcard.model.InMemoryCreditCardStorage;
+import pl.blackslu.pp5.creditcard.model.*;
 
 import java.math.BigDecimal;
 
@@ -13,12 +11,17 @@ public class CreditCardFacadeTest {
 
     private InMemoryCreditCardStorage creditCardStorage;
 
+    @Before
+    public void setup(){
+        creditCardStorage = new InMemoryCreditCardStorage();
+    }
+
     @Test
     public void allowWithdrawFromCards(){
         thereIsCreditCardIdentifiedWithNumber("1234-56789");
 
         CreditCardFacade api = thereIsCCApi();
-        api.withdraw("1234-56789", BigDecimal.valueOf(200));
+        api.withdraw(new WithdrawCommand("1234-56789", BigDecimal.valueOf(200)));
 
         CardSummary summary = api.getSummary("1234-56789");
         Assert.assertNotNull(summary);
@@ -27,7 +30,7 @@ public class CreditCardFacadeTest {
     }
 
     private CreditCardFacade thereIsCCApi() {
-        return new CreditCardFacade();
+        return new CreditCardFacade(this.creditCardStorage);
     }
 
     private void thereIsCreditCardIdentifiedWithNumber(String number) {
