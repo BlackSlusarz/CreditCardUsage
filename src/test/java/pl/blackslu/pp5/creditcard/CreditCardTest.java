@@ -2,6 +2,8 @@ package pl.blackslu.pp5.creditcard;
 
 import org.junit.Assert;
 import org.junit.Test;
+import pl.blackslu.pp5.creditcard.model.CreditBelowLimitException;
+import pl.blackslu.pp5.creditcard.model.CreditCard;
 
 import java.math.BigDecimal;
 
@@ -12,15 +14,20 @@ public class CreditCardTest {
     @Test
     public void itAllowAssignLimitToCreditCard() {
         //Arrange // Given
-        CreditCard creditCard = new CreditCard();
+        CreditCard creditCard = thereIsCreditCard();
         //Act //When
         creditCard.assignLimit(BigDecimal.valueOf(INITIAL_LIMIT));
         //Assert // Then // Expect
         Assert.assertEquals(BigDecimal.valueOf(INITIAL_LIMIT), creditCard.limit());
     }
+
+    private CreditCard thereIsCreditCard() {
+        return new CreditCard("123456789");
+    }
+
     @Test
     public void denyAssignLimitBelowMinimum(){
-        CreditCard creditCard = new CreditCard();
+        CreditCard creditCard = thereIsCreditCard();
 
         try {
             creditCard.assignLimit(BigDecimal.valueOf(500));
@@ -33,7 +40,7 @@ public class CreditCardTest {
     @Test
     public void withdrawFromCard(){
         //Arrange // Given
-        CreditCard creditCard = new CreditCard();
+        CreditCard creditCard = thereIsCreditCard();
         creditCard.assignLimit(BigDecimal.valueOf(INITIAL_LIMIT));
         //Act //When
         creditCard.withdraw(BigDecimal.valueOf(200));
